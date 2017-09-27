@@ -1,4 +1,7 @@
 # How to run
+`$> yarn`
+install dependencies
+
 `$> npm start -s`
 And open your browser and locate to http://localhost:3000
 The detail configuration can be found in webpack.config.js
