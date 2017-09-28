@@ -4,6 +4,8 @@ import {Provider} from 'react-redux';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import About from './components/About';
+import './styles/index.css'
+
 const store = configureStore();
 
 const App = () => (
