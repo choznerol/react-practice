@@ -1,14 +1,24 @@
 import React from 'react';
 import configureStore from './store/configureStore';
 import {Provider} from 'react-redux';
-import {Router, browserHistory} from 'react-router';
-import routes from './routes.jsx';
-
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import HomePage from './components/HomePage';
+import About from './components/About';
 const store = configureStore();
 
 const App = () => (
     <Provider store={store}>
-        <Router history={browserHistory} routes={routes}/>
+        <Router>
+            <div>
+                <ul>
+                    <li><Link to="/">/</Link></li>
+                    <li><Link to="/about">/about</Link></li>
+                </ul>
+
+                <Route exact path="/" component={HomePage}></Route>
+                <Route path="/about" component={About}></Route>
+            </div>
+        </Router>
     </Provider>
 );
 

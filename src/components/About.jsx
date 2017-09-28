@@ -1,15 +1,15 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-class HomePage extends React.Component {
+class About extends React.Component {
     render() {
         return (
             <div>
-                <h1>Home 3</h1>
-                <p>React, redux and ...</p>
+                <h1>About</h1>
+                <p>find me in src/components/About.jsx</p>
             </div>
         );
     }
 }
 
-export default HomePage;
+export default About;
