@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { increaseUnsavedAbility, decreaseUnsavedAbility,
-        fetchProfileIfNeeded, patchProfile } from '../actions'
+        fetchProfileIfNeeded, patchProfile, clearMessage } from '../actions'
 import PropTypes from 'prop-types'
 import FetchingProfile from '../components/FetchingProfile'
 import AbilityCounter from '../components/AbilityCounter'
+import Message from '../components/Message'
 
 class HeroProfile extends Component {
     static propTypes = {
@@ -27,7 +28,7 @@ class HeroProfile extends Component {
     }
 
     render () {
-        const { heroID, profiles, isFetching, handleIncrementClick, handleDecrementClick, handleSave } = this.props
+        const { heroID, message, profiles, isFetching, handleIncrementClick, handleDecrementClick, handleSave } = this.props
 
         // Fetching
         if (isFetching) {
@@ -38,6 +39,7 @@ class HeroProfile extends Component {
 
             return (
                 <div className="card">
+                    { message ? (<Message content={ message }/>) : null}
                     <div className="card-body">
                         <div className="row">
                             {/* 右半邊：可調整 4 種能力值 */}
@@ -92,6 +94,7 @@ const mapStateToProps = (state, ownProps) => {
         heroID,
         isFetching,
         profiles: state.profiles,
+        message: state.message
     }
 }
 
@@ -104,6 +107,7 @@ const mapDispatchToProps = (dispatch) => ({
     },
     handleHeroChanged: (newHeroID) => {
         dispatch(fetchProfileIfNeeded(newHeroID))
+        dispatch(clearMessage())
     },
     handleSave: (heroID, data) => {
         dispatch(patchProfile(heroID, data))

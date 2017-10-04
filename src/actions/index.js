@@ -68,3 +68,7 @@ export const patchProfileRejected = (err) => ({
     type: 'PATCH_PROFILE_REJECTED',
     err
 })
+
+export const clearMessage = () => ({
+    type: 'CLEAR_MESSAGE'
+})
