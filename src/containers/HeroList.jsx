@@ -18,6 +18,7 @@ class HeroList extends Component {
         selectedHeroId: PropTypes.string
     }
 
+    // 造訪 /heros 並渲染此組件後抓一次所有的 heros
     componentDidMount() {
         const { dispatch } = this.props
         dispatch(fetchHeros())

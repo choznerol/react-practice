@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+// 一組 AbilityCounter 包含增加按鈕、能力數值、減少按鈕
 const AbilityCounter = ({ abilityType, unsavedAbility, onIncrementClick, onDecrementClick, remainPoints }) => {
     return (
         <span className="d-flex justify-content-between mb-2">
@@ -10,9 +11,7 @@ const AbilityCounter = ({ abilityType, unsavedAbility, onIncrementClick, onDecre
                 onClick={ onIncrementClick }
                 disabled={ remainPoints <= 0 }
                 > + </button>
-            <b>
-                { unsavedAbility }
-            </b>
+            <b>{ unsavedAbility }</b>
             <button
                 className="btn btn-primary"
                 onClick={ onDecrementClick }

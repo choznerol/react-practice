@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom'
 
 const HeroCard = ({ id, name, image, selectedHeroId }) => {
 
+    // react-router 據此判斷是否套用 active class
     const isActive = () => parseInt(id) === parseInt(selectedHeroId)
 
     return (

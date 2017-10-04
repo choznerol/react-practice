@@ -20,9 +20,8 @@ const profiles = (state = {
             console.log(`更新 ${action.id} 成功：${action.json}`)
             return state
         case 'FETCH_PROFILE_FULFILLED':
-            console.log('FETCH_PROFILE_FULFILLED', action);
             const abilities = action.data
-            // unsaved_xxx 將用來儲存尚未 patch 的能力值
+            // unsaved_xxx 將用來暫存尚未儲存的能力值
             const newAbilities = {
                 ...abilities,
                 'unsaved_str': abilities.str,
