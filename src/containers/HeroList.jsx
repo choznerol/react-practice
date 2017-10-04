@@ -1,29 +1,38 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { selecteHero } from '../actions'
+import { selecteHero, fetchHeros, fetchProfileIfNeeded } from '../actions'
 import HeroCard from '../components/HeroCard'
 
 class HeroList extends Component {
     static propTypes = {
-        heros: PropTypes.arrayOf(PropTypes.shape({
-            id: PropTypes.number.isRequired,
-            name: PropTypes.string.isRequired,
-            image: PropTypes.string.isRequired,
-            selected: PropTypes.bool.isRequired
-        }).isRequired).isRequired,
-        onCardClick: PropTypes.func.isRequired
+        heros: PropTypes.shape({
+            isFetching: PropTypes.bool.isRequired,
+            items: PropTypes.arrayOf(PropTypes.shape({
+                id: PropTypes.string.isRequired,
+                name: PropTypes.string.isRequired,
+                image: PropTypes.string.isRequired,
+                // selected: PropTypes.bool.isRequired
+            }).isRequired).isRequired,
+        }),
+        selectedHeroId: PropTypes.string
+    }
+
+    componentDidMount() {
+        const { dispatch } = this.props
+        dispatch(fetchHeros())
     }
 
     render () {
-        const { heros, onCardClick } = this.props
+        const { heros, handleCardClick, selectedHeroId } = this.props
         return (
             <div className="card-deck mb-4">
-                { heros.map(hero =>
+                { heros.items.map(hero =>
                     <HeroCard
                         key={ hero.id }
                         {...hero}
-                        onClick={() => onCardClick(hero.id)}
+                        // onClick={ () => handleCardClick(hero.id) }
+                        selectedHeroId={ selectedHeroId }
                     />
                 )}
             </div>
@@ -31,18 +40,9 @@ class HeroList extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-    heros: state.heros.map(hero => ({
-        ...hero,
-        selected: hero.id === state.selectedHeroId
-    }))
+const mapStateToProps = (state, ownProps) => ({
+    heros: state.heros,
+    selectedHeroId: ownProps.selectedHeroId
 })
 
-const mapDispatchToProps = {
-    onCardClick: selecteHero
-}
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(HeroList)
+export default connect(mapStateToProps)(HeroList)

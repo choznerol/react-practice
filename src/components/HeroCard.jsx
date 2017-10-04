@@ -1,27 +1,30 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { NavLink } from 'react-router-dom'
 
-const HeroCard = ({ onClick, id, name, image, selected }) => (
-    <a
+const HeroCard = ({ id, name, image, selectedHeroId }) => {
+
+    const isActive = () => parseInt(id) === parseInt(selectedHeroId)
+
+    return (
+    <NavLink
         className="card"
-        href="#"
-        onClick={e => {
-            e.preventDefault()
-            onClick()
-    }}>
+        activeClassName="border-success"
+        isActive={isActive}
+        to={'/heros/' + id}
+        >
         <img className="card-img-top" src={ image } alt={ `${id}-${name}` }/>
         <div className="card-body">
-            <h4 className="card-title text-center">{ id }:{ name }:{ selected ? 'T' : 'F' }</h4>
+            <h4 className="card-title text-center">{ name }</h4>
         </div>
-    </a>
-)
+    </NavLink>
+)}
 
 HeroCard.propTypes = {
-    onClick: PropTypes.func.isRequired,
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
-    selected: PropTypes.bool.isRequired
+    selectedHeroId: PropTypes.string
 }
 
 export default HeroCard
