@@ -1,9 +1,8 @@
+//
 // 由 Container components 使用的 action creators
-export const selecteHero = (id) => ({
-    type: 'SELECT_HERO',
-    id
-})
+//
 
+// 送出抓取 profile 請求，之後 epics 檢查了 store 中確實沒有資料才真的抓取
 export const fetchProfileIfNeeded = (id) => ({
     type: 'FETCH_PROFILE_IF_NEEDED',
     id
@@ -28,7 +27,9 @@ export const patchProfile = (id, data) => ({
 })
 
 
+//
 // 由 epic 呼叫的 action creators
+//
 export const fetchHeros = () => ({
     type: 'FETCH_HEROS'
 })
