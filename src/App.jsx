@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import configureStore from './store/configureStore';
 import {Provider} from 'react-redux';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import 'rxjs';
 import HomePage from './components/HomePage';
 import HeroPage from './components/HeroPage';
 import './styles/index.css'

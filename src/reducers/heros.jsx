@@ -4,18 +4,25 @@ const heros = (state = {
     items: []
 }, action) => {
     switch (action.type) {
-        case 'REQUEST_HEROS':
+        case 'FETCH_HEROS':
             return {
                 ...state,
                 isFetching: true
             }
             break;
-        case 'RECEIVE_HEROS':
+        case 'FETCH_HEROS_FULFILLED':
             return {
                 ...state,
                 isFetching: false,
                 items: action.herosArray,
                 lastUpdated: action.receivedAt
+            }
+            break;
+        case 'FETCH_HEROS_CANCELED':
+        case 'FETCH_HEROS_REJECTED':
+            return {
+                ...state,
+                isFetching: false
             }
             break;
         default:

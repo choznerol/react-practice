@@ -1,23 +1,51 @@
-// Action Creators
+// 由 Container components 使用的 action creators
 export const selecteHero = (id) => ({
     type: 'SELECT_HERO',
-    selectedHeroId: id
+    id
 })
 
-export const requestHeros = () => ({
-    type: 'REQUEST_HEROS'
+export const fetchProfileIfNeeded = (id) => ({
+    type: 'FETCH_PROFILE_IF_NEEDED',
+    id
 })
 
-export const recieveHeros = (json) => ({
-    type: 'RECEIVE_HEROS',
+export const increaseUnsavedAbility = (id, ability) => ({
+    type: 'INCREASE_UNSAVED_ABILITY',
+    id,
+    ability
+})
+
+export const decreaseUnsavedAbility = (id, ability) => ({
+    type: 'DECREASE_UNSAVED_ABILITY',
+    id,
+    ability
+})
+
+
+// 由 epic 呼叫的 action creators
+export const fetchHeros = () => ({
+    type: 'FETCH_HEROS'
+})
+
+export const fetchHerosFulfilled = (json) => ({
+    type: 'FETCH_HEROS_FULFILLED',
     herosArray: json,
     receivedAt: Date.now()
 })
 
-// 非同步操作
-export const fetchHeros = dispatch => {
-    dispatch(requestHeros())
-    return fetch('http://hahow-recruit.herokuapp.com/heroes')
-        .then(response => response.json())
-        .then(json => dispatch(receivePosts(json)))
-}
+export const fetchProfile = (id) => ({
+    type: 'FETCH_PROFILE',
+    id
+})
+
+export const fetchProfileFulfilled = (json, id) => ({
+    type: 'FETCH_PROFILE_FULFILLED',
+    id,
+    json,
+    receivedAt: Date.now()
+})
+
+export const fetchProfileRejected = (err) => ({
+    type: 'FETCH_PROFILE_REJECTED',
+    err
+})
