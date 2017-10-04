@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { increaseUnsavedAbility, decreaseUnsavedAbility, fetchProfileIfNeeded} from '../actions'
+import { increaseUnsavedAbility, decreaseUnsavedAbility,
+        fetchProfileIfNeeded, patchProfile } from '../actions'
 import PropTypes from 'prop-types'
 import FetchingProfile from '../components/FetchingProfile'
 import AbilityCounter from '../components/AbilityCounter'
@@ -11,7 +12,8 @@ class HeroProfile extends Component {
         isFetching: PropTypes.bool.isRequired,
         handleIncrementClick: PropTypes.func.isRequired,
         handleDecrementClick: PropTypes.func.isRequired,
-        handleHeroChanged: PropTypes.func.isRequired
+        handleHeroChanged: PropTypes.func.isRequired,
+        handleSave: PropTypes.func.isRequired
     }
 
     componentDidMount() {
@@ -26,7 +28,7 @@ class HeroProfile extends Component {
     }
 
     render () {
-        const { heroID, profiles, isFetching, handleIncrementClick, handleDecrementClick } = this.props
+        const { heroID, profiles, isFetching, handleIncrementClick, handleDecrementClick, handleSave } = this.props
 
         // Fetching
         if (isFetching) {
@@ -38,7 +40,6 @@ class HeroProfile extends Component {
             return (
                 <div className="card">
                     <div className="card-body">
-                        <div className="row"><code>{ abilities.unsaved_str || 'No `abilities.unsaved_str`' }</code></div>
                         <div className="row">
                             {/* 右半邊：可調整 4 種能力值 */}
                             <div className="col">
@@ -58,16 +59,18 @@ class HeroProfile extends Component {
                             {/* 左半邊：顯示剩餘點數及儲存 */}
                             <div className="col d-flex flex-column justify-content-end align-items-end">
                                 <b>剩餘點數：{ remainPoints }</b>
-                                <a
-                                    href="#"
+                                <button
                                     className="btn btn-primary"
-                                    onClick={(e) => {
-                                        e.preventDefault()
-
+                                    onClick={() => { handleSave(heroID, {
+                                            str: abilities.unsaved_str,
+                                            int: abilities.unsaved_int,
+                                            agi: abilities.unsaved_agi,
+                                            luk: abilities.unsaved_luk
+                                        })
                                     }}
                                 >
                                     儲存
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -102,6 +105,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     handleHeroChanged: (newHeroID) => {
         dispatch(fetchProfileIfNeeded(newHeroID))
+    },
+    handleSave: (heroID, data) => {
+        dispatch(patchProfile(heroID, data))
     }
 })
 

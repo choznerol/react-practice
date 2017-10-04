@@ -1,8 +1,9 @@
 import { combineEpics } from 'redux-observable';
 import { Observable } from 'rxjs'
 import { ajax } from 'rxjs/observable/dom/ajax';
-import { fetchHerosFulfilled, fetchProfileFulfilled,
-        fetchProfileRejected, fetchProfile } from '../actions'
+import { fetchProfile, fetchProfileFulfilled,
+            fetchProfileRejected, patchProfileFulfilled,
+            patchProfileRejected, fetchHerosFulfilled } from '../actions'
 
 
 // 抓取所有 heros
@@ -35,8 +36,8 @@ const fetchProfileEpic = action$ =>
             crossDomain: true,
             responseType: 'json'
         })
-        // 有時會收到 200OK 的 {code: 1000, msg: 'Server Error'}
-        .map(data => data.code ?
+        // 曾經收到 200OK 的 {code: 1000, msg: 'Server Error'} 回應
+        .map(data => data.code === 1000 ?
             fetchProfileRejected(data.code) :
             fetchProfileFulfilled(data.response, action.id))
         .catch(error => Observable.of(fetchProfileRejected(error.message)))
@@ -44,10 +45,28 @@ const fetchProfileEpic = action$ =>
     );
 
 
+const patchProfileEpic = (action$, store) =>
+    action$.ofType('PATCH_PROFILE')
+    .switchMap(action =>
+        ajax({
+            url: `https://hahow-recruit.herokuapp.com/heroes/${action.id}/profile`,
+            method: 'PATCH',
+            body: action.data,
+            crossDomain: true,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .map(data => patchProfileFulfilled(data, action.id))
+        .catch(error => Observable.of(patchProfileRejected(error.message)))
+    );
+
+
 const rootEpic = combineEpics(
-    fetchProfileIfNeededEpic,
     fetchHerosEpic,
-    fetchProfileEpic
+    fetchProfileIfNeededEpic,
+    fetchProfileEpic,
+    patchProfileEpic
 );
 
 export default rootEpic

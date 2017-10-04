@@ -21,15 +21,21 @@ export const decreaseUnsavedAbility = (id, ability) => ({
     ability
 })
 
+export const patchProfile = (id, data) => ({
+    type: 'PATCH_PROFILE',
+    id,
+    data
+})
+
 
 // 由 epic 呼叫的 action creators
 export const fetchHeros = () => ({
     type: 'FETCH_HEROS'
 })
 
-export const fetchHerosFulfilled = (json) => ({
+export const fetchHerosFulfilled = (data) => ({
     type: 'FETCH_HEROS_FULFILLED',
-    herosArray: json,
+    herosArray: data,
     receivedAt: Date.now()
 })
 
@@ -38,14 +44,26 @@ export const fetchProfile = (id) => ({
     id
 })
 
-export const fetchProfileFulfilled = (json, id) => ({
+export const fetchProfileFulfilled = (data, id) => ({
     type: 'FETCH_PROFILE_FULFILLED',
     id,
-    json,
+    data,
     receivedAt: Date.now()
 })
 
 export const fetchProfileRejected = (err) => ({
     type: 'FETCH_PROFILE_REJECTED',
+    err
+})
+
+export const patchProfileFulfilled = (data, id) => ({
+    type: 'PATCH_PROFILE_FULFILLED',
+    id,
+    data,
+    receivedAt: Date.now()
+})
+
+export const patchProfileRejected = (err) => ({
+    type: 'PATCH_PROFILE_REJECTED',
     err
 })

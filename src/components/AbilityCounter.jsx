@@ -25,7 +25,7 @@ const AbilityCounter = ({ abilityType, unsavedAbility, onIncrementClick, onDecre
 AbilityCounter.propTypes = {
     abilityType: PropTypes.string.isRequired,
     remainPoints: PropTypes.number.isRequired,
-    unsaved_ability: PropTypes.number.isRequired,
+    unsavedAbility: PropTypes.number.isRequired,
     onDecrementClick: PropTypes.func.isRequired,
     onDecrementClick: PropTypes.func.isRequired
 }

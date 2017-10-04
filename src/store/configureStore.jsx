@@ -3,6 +3,18 @@ import rootReducer from '../reducers';
 import { createEpicMiddleware } from 'redux-observable';
 import rootEpic from '../epics'
 
+// 前端測試用 state
+const preloadedState = {
+    heros: [
+        {id: 1, name: 'Fetching...', image: 'http://lorempixel.com/g/200/200/abstract'}
+    ],
+    profiles: {
+        items: {
+            1: { id: 1, "str": 1, "int": 1, "agi": 1, "luk": 1 }
+        }
+    }
+}
+
 // 使用 redux-observable
 const epicMiddleware = createEpicMiddleware(rootEpic);
 

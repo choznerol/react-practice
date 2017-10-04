@@ -9,14 +9,19 @@ const profiles = (state = {
                 ...state,
                 isFetching: true
             }
+        case 'PATCH_PROFILE_REJECTED':
         case 'FETCH_PROFILE_REJECTED':
             console.error(action.err)
             return {
                 ...state,
                 isFetching: false,
             }
+        case 'PATCH_PROFILE_FULFILLED':
+            console.log(`更新 ${action.id} 成功：${action.json}`)
+            return state
         case 'FETCH_PROFILE_FULFILLED':
-            const abilities = action.json
+            console.log('FETCH_PROFILE_FULFILLED', action);
+            const abilities = action.data
             // unsaved_xxx 將用來儲存尚未 patch 的能力值
             const newAbilities = {
                 ...abilities,
