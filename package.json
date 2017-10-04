@@ -1,7 +1,7 @@
 {
-  "name": "react-start-kit",
-  "version": "0.0.1",
-  "description": "A starter kit for react, redux, react-router using react-hot-loader#3.0 and webpack#2.0",
+  "name": "hahow-frontend-recruit-project",
+  "version": "1.0.0",
+  "description": "Interview project for applying Hahow frontend by Choznerol. (http://hahow-recruit.herokuapp.com/frontend#get-hero-list)",
   "main": "index.js",
   "scripts": {
     "start": "npm-run-all -p watch-css start-js",
