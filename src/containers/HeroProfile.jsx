@@ -20,9 +20,8 @@ class HeroProfile extends Component {
         this.props.handleHeroChanged(this.props.heroID)
     }
 
-    componentDidUpdate(nextProps, nextState) {
+    componentWillUpdate(nextProps, nextState) {
         if (this.props.heroID !== nextProps.heroID) {
-            console.log('[HeroProfile] handleHeroChanged()');
             this.props.handleHeroChanged(nextProps.heroID)
         }
     }
