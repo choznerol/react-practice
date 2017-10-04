@@ -4,14 +4,16 @@ import { addTodo } from '../actions'
 import HeroList from '../containers/HeroList'
 import HeroProfile from '../containers/HeroProfile'
 
-const HeroPage = () => (
+const HeroPage = ({ match }) => (
     <div style={{
         maxWidth: '1024px',
         marginLeft: 'auto',
         marginRight: 'auto'
     }}>
-        <HeroList></HeroList>
-        <HeroProfile></HeroProfile>
+        <Route path="/:id">
+            <HeroList selectedHeroId={ match.params.id } ></HeroList>
+        </Route>
+        {match.params.id ? (<HeroProfile selectedHeroId={ match.params.id } ></HeroProfile>) : null}
     </div>
 )
 

@@ -35,6 +35,10 @@ module.exports = {
     host: 'localhost',
     port: 3000,
     hot: true,
+
+    historyApiFallback: true
+    // 404s will fallback to /index.html
+    // TODO: setup prerender for production
   },
   resolve: {
     extensions: ['.js', '.jsx']

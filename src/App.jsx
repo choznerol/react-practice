@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import configureStore from './store/configureStore';
-import {Provider} from 'react-redux';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { BrowserRouter, Route } from 'react-router-dom';
 import 'rxjs';
 import HomePage from './components/HomePage';
 import HeroPage from './components/HeroPage';
@@ -13,17 +13,13 @@ class App extends Component {
     render () {
         return (
             <Provider store={store}>
-                <Router>
+                <BrowserRouter>
                     <div>
-                        <ul>
-                            <li><Link to="/">/</Link></li>
-                            <li><Link to="/heros">/heros</Link></li>
-                        </ul>
-
                         <Route exact path="/" component={HomePage}></Route>
-                        <Route path="/heros" component={HeroPage}></Route>
+                        <Route exact path="/heros" component={HeroPage}></Route>
+                        <Route path="/heros/:id" component={HeroPage}></Route>
                     </div>
-                </Router>
+                </BrowserRouter>
             </Provider>
         );
     }
