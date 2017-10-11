@@ -30,7 +30,6 @@ class HeroProfile extends Component {
     render () {
         const { heroID, message, profiles, isFetching, handleIncrementClick, handleDecrementClick, handleSave } = this.props
 
-        // Fetching
         if (isFetching) {
             return (<FetchingProfile/>)
         } else {
@@ -88,7 +87,7 @@ class HeroProfile extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    const heroID = ownProps.selectedHeroId
+    const heroID = ownProps.match.params.id
     const isFetching = !state.profiles.items[heroID]
     return {
         heroID,
