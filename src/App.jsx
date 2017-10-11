@@ -14,10 +14,10 @@ class App extends Component {
         return (
             <Provider store={store}>
                 <BrowserRouter>
-                    <div>
+                    <main>
                         <Route exact path="/" component={HomePage}></Route>
                         <Route path="/heros" component={HeroPage}></Route>
-                    </div>
+                    </main>
                 </BrowserRouter>
             </Provider>
         );

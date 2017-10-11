@@ -5552,5 +5552,8 @@ a.text-dark:focus, a.text-dark:hover {
 .invisible {
   visibility: hidden !important; }
 
-body {
-  padding: 10px; }
+main {
+  max-width: 1024px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 50px; }

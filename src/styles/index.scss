@@ -2,12 +2,10 @@
 // TODO: 是否將 index.css 加入 .gitignore ?
 
 // 客製化 bootstrap 的參數
-@import 'custom_bootstrap.sass';
+@import '_custom_bootstrap.scss';
 
 // Bootstrap library
 @import 'bootstrap/scss/bootstrap';
 
-// 全域樣式
-body {
-    padding: 10px;
-}
+// Other styles
+@import '_layout.scss';
