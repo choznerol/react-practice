@@ -1,0 +1,14 @@
+// 參照 node_module/bootstrap/scss/_variables.scss 客製化變數
+$green:   #2dac8e;
+
+
+$custom-theme-color: (
+    primary: $green
+);
+
+
+// 最後載入預設 variables
+@import "~bootstrap/scss/variables";
+
+// TODO: v4-beta2 釋出後移除這行，直接定義 $theme-colors（goo.gl/4dt2Kt）
+$theme-colors: map_merge($theme-colors, $custom-theme-color);

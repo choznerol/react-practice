@@ -5,7 +5,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import 'rxjs';
 import HomePage from './components/HomePage';
 import HeroPage from './components/HeroPage';
-import './styles/index.css'
+import './styles/index.scss'
 
 const store = configureStore();
 

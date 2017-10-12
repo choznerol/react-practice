@@ -4,10 +4,7 @@
   "description": "Interview project for applying Hahow frontend by Choznerol. (http://hahow-recruit.herokuapp.com/frontend#get-hero-list)",
   "main": "index.js",
   "scripts": {
-    "start": "npm-run-all -p watch-css start-js",
-    "start-js": "webpack-dev-server",
-    "build-css": "node-sass-chokidar --include-path ./src/styles --include-path ./node_modules src/styles/ -o src/styles/",
-    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src/styles --include-path ./node_modules src/styles/ -o src/styles --watch --recursive",
+    "start": "webpack-dev-server",
     "lint": "eslint src/**",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,9 +19,6 @@
   "license": "MIT",
   "dependencies": {
     "babel-polyfill": "^6.22.0",
-    "bootstrap": "^4.0.0-beta",
-    "node-sass-chokidar": "^0.0.3",
-    "npm-run-all": "^4.1.1",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
@@ -35,6 +29,8 @@
     "rxjs": "^5.4.3"
   },
   "devDependencies": {
+    "bootstrap": "^4.0.0-beta",
+    "sass-loader": "^6.0.6",
     "babel-cli": "^6.22.2",
     "babel-core": "^6.22.1",
     "babel-loader": "^7.1.2",

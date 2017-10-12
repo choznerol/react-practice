@@ -1,11 +1,5 @@
-// 這個檔案會自動 compile 成 ./index.css
-// TODO: 是否將 index.css 加入 .gitignore ?
+// 客製化的 Bootstrap (SCSS)
+@import "./custom_bootstrap/index.scss";
 
-// 客製化 bootstrap 的參數
-@import '_custom_bootstrap.scss';
-
-// Bootstrap library
-@import 'bootstrap/scss/bootstrap';
-
-// Other styles
-@import '_layout.scss';
+// 其他樣式
+@import "./app/index.scss";

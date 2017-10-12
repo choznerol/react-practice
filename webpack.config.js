@@ -53,10 +53,17 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.css$/,
+        test: /\.scss$/,
+        // TODO: setup ExtractTextPlugin for production
         use: [
           'style-loader',
-          'css-loader'
+          'css-loader',
+          {
+              loader: 'sass-loader',
+              options: {
+                  includePaths: ['./src/styles']
+              }
+          }
         ],
         exclude: /node_modules/
       }
