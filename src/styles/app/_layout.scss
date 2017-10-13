@@ -1,12 +1,13 @@
+//
+// Non-reusable global layout CSS
+//
 
-// <BrowserRouter/> 下的內容
 main {
+
     // 置中
     max-width: 1024px;
     margin-right: auto;
     margin-left: auto;
 
-    // 根據 wireframe 推測
-    // http://hahow-recruit.herokuapp.com/hero-list-page.png
-    margin-top: 50px;
+    @extend .mt-lg-5;
 }
