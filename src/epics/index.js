@@ -4,7 +4,7 @@ import { ajax } from 'rxjs/observable/dom/ajax';
 import { fetchProfile, fetchProfileFulfilled,
             fetchProfileRejected, patchProfileFulfilled,
             patchProfileRejected, fetchHerosFulfilled } from '../actions'
-
+import { hideLoading } from 'react-redux-loading-bar'
 
 // 抓取所有 heros
 const fetchHerosEpic = action$ =>
@@ -27,22 +27,34 @@ const fetchProfileIfNeededEpic = (action$, store) =>
     .map((action) => fetchProfile(action.id))
 
 
-// 抓取一個 profile
+
+/**
+ * 抓取 profile，成功後 dispatch 'HIDE_LOADING' 和 'FETCH_HEROS_FULFILLED'
+ */
 const fetchProfileEpic = action$ =>
     action$.ofType('FETCH_PROFILE')
+    // Demo loading bar
+    .delay(1000)
     .mergeMap(action =>
         ajax({
             url: `http://hahow-recruit.herokuapp.com/heroes/${action.id}/profile`,
             crossDomain: true,
             responseType: 'json'
         })
-        // 曾經收到 200OK 的 {code: 1000, msg: 'Server Error'} 回應
-        .map(data => data.code === 1000 ?
-            fetchProfileRejected(data.code) :
-            fetchProfileFulfilled(data.response, action.id))
-        .catch(error => Observable.of(fetchProfileRejected(error.message)))
+        .mergeMap((data) => {
+            if (data.status === 200) {
+                return Observable.concat(
+                    Observable.of(fetchProfileFulfilled(data.response, action.id)),
+                    Observable.of(hideLoading())
+                )
+            } else {
+                return Observable.of(fetchProfileRejected(data.code))
+            }
+        })
         .takeUntil(action$.ofType('FETCH_PROFILE_CANCELED'))
-    );
+        .catch(error => Observable.of(fetchProfileRejected(error.message)))
+    )
+
 
 
 const patchProfileEpic = (action$, store) =>
