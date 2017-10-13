@@ -1,56 +1,30 @@
-//
-// 由 Container components 使用的 action creators
-//
 
-// 送出抓取 profile 請求，之後 epics 檢查了 store 中確實沒有資料才真的抓取
-export const fetchProfileIfNeeded = (id) => ({
-    type: 'FETCH_PROFILE_IF_NEEDED',
-    id
-})
+export const increaseUnsavedAbility = makeActionCreator('INCREASE_UNSAVED_ABILITY', 'id', 'ability')
 
-export const increaseUnsavedAbility = (id, ability) => ({
-    type: 'INCREASE_UNSAVED_ABILITY',
-    id,
-    ability
-})
+export const decreaseUnsavedAbility = makeActionCreator('DECREASE_UNSAVED_ABILITY', 'id', 'ability')
 
-export const decreaseUnsavedAbility = (id, ability) => ({
-    type: 'DECREASE_UNSAVED_ABILITY',
-    id,
-    ability
-})
+export const patchProfile = makeActionCreator('PATCH_PROFILE', 'id', 'data')
 
-export const patchProfile = (id, data) => ({
-    type: 'PATCH_PROFILE',
-    id,
-    data
-})
+export const clearMessage = makeActionCreator('CLEAR_MESSAGE', 'id', 'data')
 
 
-//
-// 由 epic 呼叫的 action creators
-//
-export const fetchHeros = () => ({
-    type: 'FETCH_HEROS'
-})
+/** List Heroes */
+export const fetchHeros = makeActionCreator('FETCH_HEROS')
+
+export const fetchHerosRefected = makeActionCreator('FETCH_HEROS_REJECTED')
 
 export const fetchHerosFulfilled = (data) => ({
     type: 'FETCH_HEROS_FULFILLED',
-    herosArray: data,
-    receivedAt: Date.now()
+    herosArray: data
 })
 
-export const fetchProfile = (id) => ({
-    type: 'FETCH_PROFILE',
-    id
-})
 
-export const fetchProfileFulfilled = (data, id) => ({
-    type: 'FETCH_PROFILE_FULFILLED',
-    id,
-    data,
-    receivedAt: Date.now()
-})
+/** Profile of Hero */
+export const fetchProfileIfNeeded = makeActionCreator('FETCH_PROFILE_IF_NEEDED', 'id')
+
+export const fetchProfile = makeActionCreator('FETCH_PROFILE', 'id')
+
+export const fetchProfileFulfilled = makeActionCreator('FETCH_PROFILE_FULFILLED', 'id', 'data')
 
 export const fetchProfileRejected = (err) => ({
     type: 'FETCH_PROFILE_REJECTED',
@@ -58,6 +32,8 @@ export const fetchProfileRejected = (err) => ({
     err
 })
 
+
+/** Patch Hero's Profile */
 export const patchProfileFulfilled = (data, id) => ({
     type: 'PATCH_PROFILE_FULFILLED',
     id,
@@ -72,6 +48,21 @@ export const patchProfileRejected = (err) => ({
     err
 })
 
-export const clearMessage = () => ({
-    type: 'CLEAR_MESSAGE'
-})
+export const clearMessage = makeActionCreator('CLEAR_MESSAGE')
+
+
+/**
+ * 自動產生 action creater 減少 boilerplate（goo.gl/dgtbzT）
+ * @param  {string} type     action type
+ * @param  {string} argNames 產生的 action creater 接收的參數，也是 action 的其他鍵值
+ * @return {Function}        action creater，產生 action 物件的函數
+ */
+function makeActionCreator(type, ...argNames) {
+    return function(...args) {
+        let action = { type }
+        argNames.forEach((arg, index) => {
+            action[argNames[index]] = args[index]
+        })
+        return action
+    }
+}
