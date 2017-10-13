@@ -25,14 +25,13 @@ class HeroList extends Component {
     }
 
     render () {
-        const { heros, handleCardClick, selectedHeroId } = this.props
+        const { heros, selectedHeroId } = this.props
         return (
             <div className="card-deck mb-4">
                 { heros.items.map(hero =>
                     <HeroCard
                         key={ hero.id }
                         {...hero}
-                        // onClick={ () => handleCardClick(hero.id) }
                         selectedHeroId={ selectedHeroId }
                     />
                 )}
