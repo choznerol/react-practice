@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { selecteHero, fetchHeros, fetchProfileIfNeeded } from '../actions'
-import LoadingBar, { showLoading } from 'react-redux-loading-bar'
+import { showLoading } from 'react-redux-loading-bar'
 import HeroCard from '../components/HeroCard'
 
 class HeroList extends Component {
