@@ -11,7 +11,11 @@ export const clearMessage = makeActionCreator('CLEAR_MESSAGE')
 /** List Heroes */
 export const fetchHeros = makeActionCreator('FETCH_HEROS')
 
-export const fetchHerosRefected = makeActionCreator('FETCH_HEROS_REJECTED')
+export const fetchHerosRefected = (err) => ({
+    type: 'FETCH_HEROS_REJECTED',
+    message_text: '獲取英雄資料失敗',
+    err
+})
 
 export const fetchHerosFulfilled = (data) => ({
     type: 'FETCH_HEROS_FULFILLED',
