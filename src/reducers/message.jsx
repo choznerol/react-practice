@@ -17,6 +17,7 @@ const message = (state = defaultState, action) => {
             }
 
         // 操作失敗
+        case 'FETCH_HEROS_REJECTED':
         case 'FETCH_PROFILE_REJECTED':
         case 'PATCH_PROFILE_REJECTED':
             return {
