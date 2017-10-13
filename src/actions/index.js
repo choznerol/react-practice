@@ -5,7 +5,7 @@ export const decreaseUnsavedAbility = makeActionCreator('DECREASE_UNSAVED_ABILIT
 
 export const patchProfile = makeActionCreator('PATCH_PROFILE', 'id', 'data')
 
-export const clearMessage = makeActionCreator('CLEAR_MESSAGE', 'id', 'data')
+export const clearMessage = makeActionCreator('CLEAR_MESSAGE')
 
 
 /** List Heroes */
@@ -47,8 +47,6 @@ export const patchProfileRejected = (err) => ({
     message_text: '更新能力值失敗',
     err
 })
-
-export const clearMessage = makeActionCreator('CLEAR_MESSAGE')
 
 
 /**
