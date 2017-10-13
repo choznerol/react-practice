@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import 'rxjs';
 import HeroPage from './components/HeroPage';
 import Message from './containers/Message';
+import LoadingBar from 'react-redux-loading-bar'
 import './styles/index.scss'
 
 const store = configureStore();
@@ -15,6 +16,10 @@ class App extends Component {
             <Provider store={store}>
                 <BrowserRouter>
                     <main className="p-2">
+
+                        {/* 頂部進度條 */}
+                        <LoadingBar/>
+
                         {/* 更新成功、失敗提示訊息 */}
                         <Message/>
 
