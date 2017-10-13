@@ -54,6 +54,7 @@ export const fetchProfileFulfilled = (data, id) => ({
 
 export const fetchProfileRejected = (err) => ({
     type: 'FETCH_PROFILE_REJECTED',
+    message_text: '抓取能力值失敗',
     err
 })
 
@@ -61,11 +62,13 @@ export const patchProfileFulfilled = (data, id) => ({
     type: 'PATCH_PROFILE_FULFILLED',
     id,
     data,
+    message_text: '更新成功！',
     receivedAt: Date.now()
 })
 
 export const patchProfileRejected = (err) => ({
     type: 'PATCH_PROFILE_REJECTED',
+    message_text: '更新能力值失敗',
     err
 })
 

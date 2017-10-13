@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import 'rxjs';
 import HeroPage from './components/HeroPage';
+import Message from './containers/Message';
 import './styles/index.scss'
 
 const store = configureStore();
@@ -13,7 +14,10 @@ class App extends Component {
         return (
             <Provider store={store}>
                 <BrowserRouter>
-                    <main>
+                    <main className="p-2">
+                        {/* 更新成功、失敗提示訊息 */}
+                        <Message/>
+
                         <Switch>
                             <Route path="/heros" component={HeroPage}></Route>
 

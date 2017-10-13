@@ -58,7 +58,7 @@ const patchProfileEpic = (action$, store) =>
             }
         })
         .map(data => patchProfileFulfilled(data, action.id))
-        .catch(error => Observable.of(patchProfileRejected(error.message)))
+        .catch(error => Observable.of(patchProfileRejected(error)))
     );
 
 

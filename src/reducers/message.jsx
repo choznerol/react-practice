@@ -1,12 +1,41 @@
-const message = (state = null, action) => {
+const defaultState = {
+    visible: false,
+    text: null,
+    // Bootstrap 顏色風格，如 primary, warning, success ...等等
+    bs_style: 'primary'
+}
+
+const message = (state = defaultState, action) => {
     switch (action.type) {
+
+        // 操作成功
         case 'PATCH_PROFILE_FULFILLED':
-            return '儲存成功'
+            return {
+                visible: true,
+                text: action.message_text,
+                bs_style: 'success'
+            }
+
+        // 操作失敗
+        case 'FETCH_PROFILE_REJECTED':
+        case 'PATCH_PROFILE_REJECTED':
+            return {
+                visible: true,
+                text: composeMessageText(action.message_text, action.err),
+                bs_style: 'danger'
+            }
+
+        // 關閉提示訊息（切換卡片、手動關閉）
         case 'CLEAR_MESSAGE':
-            return null
+            return { visible: false }
         default:
             return state
     }
+}
+
+const composeMessageText = (text, err) => {
+    return err && err.message ?
+        `${text}（錯誤原因：${err.message}）` : text
 }
 
 export default message
