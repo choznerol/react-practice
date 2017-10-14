@@ -2,8 +2,7 @@ import { Observable } from 'rxjs'
 import { ajax } from 'rxjs/observable/dom/ajax'
 import { fetchProfile,
          fetchProfileFulfilled,
-         fetchProfileRejected,
-         hideProfileLoading } from '../actions'
+         fetchProfileRejected } from '../actions'
 
 
 /**
@@ -27,17 +26,11 @@ export const fetchProfileEpic = action$ =>
             crossDomain: true,
             responseType: 'json'
         })
-        .mergeMap((data) => {
+        .map((data) => {
             if (data.status === 200) {
-                return Observable.concat(
-                    Observable.of(fetchProfileFulfilled(action.id, data.response)),
-                    Observable.of(hideProfileLoading())
-                )
+                return fetchProfileFulfilled(action.id, data.response)
             } else {
-                return Observable.concat(
-                    Observable.of(fetchProfileRejected(data.code)),
-                    Observable.of(hideProfileLoading())
-                )
+                return fetchProfileRejected(data.code)
             }
         })
         .catch(error => Observable.of(fetchProfileRejected(error.message)))
