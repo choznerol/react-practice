@@ -19,7 +19,7 @@ const fetchHerosEpic = action$ =>
     .delay(1000)
     .switchMap(action =>
         ajax({
-            url: 'http://hahow-recruit.herokuapp.com/heroes------',
+            url: 'http://hahow-recruit.herokuapp.com/heroes',
             crossDomain: true,
             responseType: 'json'
         })
