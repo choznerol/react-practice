@@ -56,6 +56,10 @@ export const showSubmitLoading = makeActionCreator('SHOW_SUBMIT_LOADING')
 
 export const hideSubmitLoading = makeActionCreator('HIDE_SUBMIT_LOADING')
 
+export const showProfileLoading = makeActionCreator('SHOW_PROFILE_LOADING')
+
+export const hideProfileLoading = makeActionCreator('HIDE_PROFILE_LOADING')
+
 /**
  * 自動產生 action creater 減少 boilerplate（goo.gl/dgtbzT）
  * @param  {string} type     action type

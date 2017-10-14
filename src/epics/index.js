@@ -48,7 +48,9 @@ const fetchProfileIfNeededEpic = (action$, store) =>
     .map((action) => fetchProfile(action.id))
 
 
-// 抓取一個 profile
+/**
+ * 抓取一個英雄的能力值，成功後 dispatch 'HIDE_PROFILE_LOADING' 和 'FETCH_PROFILE_FULFILLED'
+ */
 const fetchProfileEpic = action$ =>
     action$.ofType('FETCH_PROFILE')
     .mergeMap(action =>
@@ -57,10 +59,19 @@ const fetchProfileEpic = action$ =>
             crossDomain: true,
             responseType: 'json'
         })
-        // 曾經收到 200OK 的 {code: 1000, msg: 'Server Error'} 回應
-        .map(data => data.code === 1000 ?
-            fetchProfileRejected(data.code) :
-            fetchProfileFulfilled(data.response, action.id))
+        .mergeMap((data) => {
+            if (data.status === 200) {
+                return Observable.concat(
+                    Observable.of(fetchProfileFulfilled(action.id, data.response)),
+                    Observable.of(hideProfileLoading())
+                )
+            } else {
+                return Observable.concat(
+                    Observable.of(fetchProfileRejected(data.code)),
+                    Observable.of(hideProfileLoading())
+                )
+            }
+        })
         .catch(error => Observable.of(fetchProfileRejected(error.message)))
         .takeUntil(action$.ofType('FETCH_PROFILE_CANCELED'))
     );
