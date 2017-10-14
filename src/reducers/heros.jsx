@@ -1,8 +1,6 @@
-const heros = (state = {
-    isFetching: false,
-    // TODO: items 改成物件?
-    items: []
-}, action) => {
+import { INITIAL_STORE_STATE } from './index.jsx'
+
+const heros = (state = INITIAL_STORE_STATE.heros, action) => {
     switch (action.type) {
         case 'FETCH_HEROS':
             return {

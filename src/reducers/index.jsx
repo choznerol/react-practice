@@ -22,7 +22,8 @@ export const INITIAL_STORE_STATE = {
 
     // HeroList 元件據此顯示所有 hero 的名稱與圖片
     heros: {
-        // TODO: Add inital heros state
+        isFetching: false,
+        items: []
     },
 
     // HeroProfile 元件據此顯示 hero 的能力值
