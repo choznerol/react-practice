@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { increaseUnsavedAbility, decreaseUnsavedAbility,
         fetchProfileIfNeeded, patchProfile, clearMessage } from '../actions'
 import PropTypes from 'prop-types'
-import FetchingProfile from '../components/FetchingProfile'
+import LoadingCard from '../components/LoadingCard'
 import AbilityCounter from '../components/AbilityCounter'
 
 class HeroProfile extends Component {
@@ -30,7 +30,7 @@ class HeroProfile extends Component {
         const { heroID, profiles, isFetching, handleIncrementClick, handleDecrementClick, handleSave } = this.props
 
         if (isFetching) {
-            return (<FetchingProfile/>)
+            return (<LoadingCard/>)
         } else {
             const abilities = profiles.items[heroID]
             const remainPoints = this.calRemainPoints(abilities)
