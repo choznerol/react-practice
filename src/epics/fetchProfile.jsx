@@ -20,6 +20,7 @@ export const fetchProfileIfNeededEpic = (action$, store) =>
  */
 export const fetchProfileEpic = action$ =>
     action$.ofType('FETCH_PROFILE')
+    .delay(1000) // Demo loading animation
     .mergeMap(action =>
         ajax({
             url: `http://hahow-recruit.herokuapp.com/heroes/${action.id}/profile`,

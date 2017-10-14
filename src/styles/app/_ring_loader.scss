@@ -1,0 +1,22 @@
+//
+// Stlye for `src/components/RingLoader.jsx`
+//
+
+
+.ring-loader-primary {
+
+    // Write layout for loader component here
+
+    .ring-loader__circle {
+
+        // Write style for the rotating circles here
+        border-color: lighten(theme-color("primary"), 25%) !important;
+    }
+}
+
+
+.ring-loader-danger {
+    .ring-loader__circle {
+        border-color: lighten(theme-color("danger"), 25%) !important;
+    }
+}
