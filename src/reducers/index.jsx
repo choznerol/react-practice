@@ -27,7 +27,10 @@ export const INITIAL_STORE_STATE = {
 
     // HeroProfile 元件據此顯示 hero 的能力值
     profiles: {
-        // TODO: Add inital profiles state
+        isFetching: false,
+        isSubmitting: false,
+        // TODO: Rename to `abilities`
+        items: {}
     }
 }
 

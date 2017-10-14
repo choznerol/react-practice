@@ -21,17 +21,11 @@ const patchProfileEpic = (action$, store) =>
                 'Content-Type': 'application/json'
             }
         })
-        .mergeMap((data) => {
+        .map((data) => {
             if (data.status === 200) {
-                return Observable.concat(
-                    Observable.of(patchProfileFulfilled(data, action.id)),
-                    Observable.of(hideSubmitLoading())
-                )
+                return patchProfileFulfilled(data, action.id)
             } else {
-                return Observable.concat(
-                    Observable.of(patchProfileRejected(data.code)),
-                    Observable.of(hideSubmitLoading())
-                )
+                return patchProfileRejected(data.code)
             }
         })
         .catch(error => Observable.of(patchProfileRejected(error)))
