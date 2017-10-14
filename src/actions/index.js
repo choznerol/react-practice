@@ -11,7 +11,7 @@ export const clearMessage = makeActionCreator('CLEAR_MESSAGE')
 /** List Heroes */
 export const fetchHeros = makeActionCreator('FETCH_HEROS')
 
-export const fetchHerosRefected = (err) => ({
+export const fetchHerosRejected = (err) => ({
     type: 'FETCH_HEROS_REJECTED',
     message_text: '獲取英雄資料失敗',
     err
@@ -52,6 +52,13 @@ export const patchProfileRejected = (err) => ({
     err
 })
 
+export const showSubmitLoading = makeActionCreator('SHOW_SUBMIT_LOADING')
+
+export const hideSubmitLoading = makeActionCreator('HIDE_SUBMIT_LOADING')
+
+export const showProfileLoading = makeActionCreator('SHOW_PROFILE_LOADING')
+
+export const hideProfileLoading = makeActionCreator('HIDE_PROFILE_LOADING')
 
 /**
  * 自動產生 action creater 減少 boilerplate（goo.gl/dgtbzT）

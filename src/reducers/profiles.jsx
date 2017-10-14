@@ -1,24 +1,21 @@
-const profiles = (state = {
-    isFetching: false,
-    items: {}
-}, action) => {
+import { INITIAL_STORE_STATE } from './index'
+
+
+const profiles = (state = INITIAL_STORE_STATE.profiles, action) => {
     const stateCopy = Object.assign({}, state)
     switch (action.type) {
+
+        // 抓取能力值
         case 'FETCH_PROFILE':
             return {
                 ...state,
                 isFetching: true
             }
-        case 'PATCH_PROFILE_REJECTED':
         case 'FETCH_PROFILE_REJECTED':
-            console.error(action.err)
             return {
                 ...state,
                 isFetching: false,
             }
-        case 'PATCH_PROFILE_FULFILLED':
-            console.log(`更新 ${action.id} 成功：${action.json}`)
-            return state
         case 'FETCH_PROFILE_FULFILLED':
             const abilities = action.data
             // unsaved_xxx 將用來暫存尚未儲存的能力值
@@ -37,6 +34,21 @@ const profiles = (state = {
                     [action.id]: newAbilities
                 }
             }
+
+        // 更新能力值
+        case 'PATCH_PROFILE':
+            return {
+                ...state,
+                isSubmitting: true
+            }
+        case 'PATCH_PROFILE_REJECTED':
+        case 'PATCH_PROFILE_FULFILLED':
+            return {
+                ...state,
+                isSubmitting: false
+            }
+
+        // 暫存前端修改的能力值（未送出儲存）
         case 'INCREASE_UNSAVED_ABILITY':
             stateCopy.items[action.id]['unsaved_' + action.ability] += 1
             return stateCopy

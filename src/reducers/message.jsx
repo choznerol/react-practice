@@ -1,11 +1,6 @@
-const defaultState = {
-    visible: false,
-    text: null,
-    // Bootstrap 顏色風格，如 primary, warning, success ...等等
-    bs_style: 'primary'
-}
+import { INITIAL_STORE_STATE } from './index.jsx'
 
-const message = (state = defaultState, action) => {
+const message = (state = INITIAL_STORE_STATE.message, action) => {
     switch (action.type) {
 
         // 操作成功
