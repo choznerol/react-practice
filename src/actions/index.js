@@ -52,6 +52,9 @@ export const patchProfileRejected = (err) => ({
     err
 })
 
+export const showSubmitLoading = makeActionCreator('SHOW_SUBMIT_LOADING')
+
+export const hideSubmitLoading = makeActionCreator('HIDE_SUBMIT_LOADING')
 
 /**
  * 自動產生 action creater 減少 boilerplate（goo.gl/dgtbzT）

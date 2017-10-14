@@ -8,7 +8,8 @@ import { fetchHerosFulfilled,
          fetchProfileFulfilled,
          fetchProfileRejected,
          patchProfileFulfilled,
-         patchProfileRejected } from '../actions'
+         patchProfileRejected,
+         hideSubmitLoading } from '../actions'
 
 /**
  * 抓取所有英雄資料，成功後 dispatch 'HIDE_LOADING' 和 'FETCH_HEROS_FULFILLED'
@@ -65,6 +66,9 @@ const fetchProfileEpic = action$ =>
     );
 
 
+/**
+ * 更新一位英雄的資料，成功後 dispatch 'HIDE_SUBMIT_LOADING' 和 'PATCH_PROFILE_FULFILLED'
+ */
 const patchProfileEpic = (action$, store) =>
     action$.ofType('PATCH_PROFILE')
     .switchMap(action =>
@@ -77,7 +81,19 @@ const patchProfileEpic = (action$, store) =>
                 'Content-Type': 'application/json'
             }
         })
-        .map(data => patchProfileFulfilled(data, action.id))
+        .mergeMap((data) => {
+            if (data.status === 200) {
+                return Observable.concat(
+                    Observable.of(patchProfileFulfilled(data, action.id)),
+                    Observable.of(hideSubmitLoading())
+                )
+            } else {
+                return Observable.concat(
+                    Observable.of(patchProfileRejected(data.code)),
+                    Observable.of(hideSubmitLoading())
+                )
+            }
+        })
         .catch(error => Observable.of(patchProfileRejected(error)))
     );
 
