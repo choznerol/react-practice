@@ -1,7 +1,7 @@
 import React from 'react'
 import RingLoader from './RingLoader'
 
-const FetchingProfile = () => (
+const LoadingCard = () => (
     <div className="card">
         <div className="card-body d-flex flex-column justify-content-center align-items-center p-5">
             <RingLoader loading={ true } className="ring-loader-primary mb-3" size="100" />
@@ -10,4 +10,4 @@ const FetchingProfile = () => (
     </div>
 )
 
-export default FetchingProfile;
+export default LoadingCard;
