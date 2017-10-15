@@ -5,50 +5,21 @@ import { increaseUnsavedAbility,
          fetchProfileIfNeeded,
          patchProfile,
          clearMessage } from '../actions'
-import PropTypes from 'prop-types'
 import LoadingCard from '../components/LoadingCard'
-import AbilityCounter from '../components/AbilityCounter'
-import PulseLoader from '../components/PulseLoader'
-
-const profileShape = PropTypes.shape({
-    // fetched version
-    str: PropTypes.number.isRequired,
-    int: PropTypes.number.isRequired,
-    agi: PropTypes.number.isRequired,
-    luk: PropTypes.number.isRequired,
-    // User edited copy
-    unsaved_str: PropTypes.number,
-    unsaved_int: PropTypes.number,
-    unsaved_agi: PropTypes.number,
-    unsaved_luk: PropTypes.number
-})
+import HeroProfileEditor from '../components/HeroProfileEditor'
 
 class HeroProfile extends Component {
-    static propTypes = {
-        // Required props
-        showLoading: PropTypes.bool.isRequired,
-        heroID: PropTypes.string.isRequired,
 
-        // showLoading === true 時才需要
-        profile: profileShape,
-        totalPoints: PropTypes.number,
-        isSubmitting: PropTypes.bool,
-        remainPoints: PropTypes.number,
-
-        // handlers
-        handleIncrementClick: PropTypes.func.isRequired,
-        handleDecrementClick: PropTypes.func.isRequired,
-        handleHeroChanged: PropTypes.func.isRequired,
-        handleSave: PropTypes.func.isRequired
-    }
-
+    // 初次選擇 hero 時 fetch 它的 profile
     componentDidMount() {
-        this.props.handleHeroChanged(this.props.heroID)
+        this.props.dispatch(fetchProfileIfNeeded(this.props.heroID))
     }
 
+    // 切換 hero 時 fetch 新的 profile，清除任何提示訊息（如：「儲存成功」）
     componentWillUpdate(nextProps, nextState) {
         if (this.props.heroID !== nextProps.heroID) {
-            this.props.handleHeroChanged(nextProps.heroID)
+            this.props.dispatch(fetchProfileIfNeeded(nextProps.heroID))
+            this.props.dispatch(clearMessage())
         }
     }
 
@@ -57,51 +28,8 @@ class HeroProfile extends Component {
         if (this.props.showLoading) {
             return (<LoadingCard/>)
         } else {
-
             return (
-                <div className="card">
-                    <div className="card-body">
-                        <div className="row">
-
-                            {/* 右半邊：可調整 4 種能力值 */}
-                            <div className="col">
-                                { ['str', 'int', 'agi', 'luk'].map(key => {
-                                        return (
-                                            <AbilityCounter
-                                                key={ this.props.heroID + key }
-                                                abilityType={ key }
-                                                remainPoints={ this.props.remainPoints }
-                                                unsavedAbility={ this.props.profile[`unsaved_${ key }`] }
-                                                onIncrementClick={ () => this.props.handleIncrementClick(this.props.heroID, key)}
-                                                onDecrementClick={ () => this.props.handleDecrementClick(this.props.heroID, key)}
-                                            />
-                                        )
-                                    })}
-                            </div>
-
-                            {/* 左半邊：顯示剩餘點數及儲存 */}
-                            <div className="col d-flex flex-column justify-content-end align-items-end">
-                                <b>剩餘點數：{ this.props.remainPoints }</b>
-                                <button
-                                    className="btn btn-primary"
-                                    onClick={() => { this.props.handleSave(this.props.heroID, {
-                                            str: this.props.profile.unsaved_str,
-                                            int: this.props.profile.unsaved_int,
-                                            agi: this.props.profile.unsaved_agi,
-                                            luk: this.props.profile.unsaved_luk
-                                        })
-                                    }}
-                                >
-                                    {this.props.isSubmitting ? (
-                                        <PulseLoader loading={ true } className="pulse-loader"/>
-                                    ) : (
-                                        '儲存'
-                                    )}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <HeroProfileEditor {...this.props} />
             )
         }
     }
@@ -135,15 +63,12 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
+    dispatch,
     handleIncrementClick: (id, ability) => {
         dispatch(increaseUnsavedAbility(id, ability))
     },
     handleDecrementClick: (id, ability) => {
         dispatch(decreaseUnsavedAbility(id, ability))
-    },
-    handleHeroChanged: (newHeroID) => {
-        dispatch(fetchProfileIfNeeded(newHeroID))
-        dispatch(clearMessage())
     },
     handleSave: (heroID, data) => {
         dispatch(patchProfile(heroID, data))
