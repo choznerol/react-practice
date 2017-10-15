@@ -4,6 +4,8 @@ import AbilityCounter from '../components/AbilityCounter'
 import PulseLoader from '../components/PulseLoader'
 
 const HeroProfileEditor = (props) => {
+    const allowSubmit = props.remainPoints === 0
+
     return (
         <div className="card">
             <div className="card-body">
@@ -27,9 +29,12 @@ const HeroProfileEditor = (props) => {
 
                     {/* 左半邊：顯示剩餘點數及儲存 */}
                     <div className="col d-flex flex-column justify-content-end align-items-end">
-                        <b>剩餘點數：{ props.remainPoints }</b>
+                        <b>剩餘點數：
+                            <span className={ allowSubmit ? '' : 'text-danger' }> { props.remainPoints } </span>
+                        </b>
                         <button
                             className="btn btn-primary"
+                            disabled={ !allowSubmit }
                             onClick={() => { props.handleSave(props.heroID, {
                                 str: props.profile.unsaved_str,
                                 int: props.profile.unsaved_int,
