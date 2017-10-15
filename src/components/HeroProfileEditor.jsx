@@ -39,7 +39,7 @@ const HeroProfileEditor = (props) => {
                         }}
                         >
                             {props.isSubmitting ? (
-                                <PulseLoader loading={ true } className="pulse-loader"/>
+                                <PulseLoader loading={ true } className="pulse-loader" size="0.6rem"/>
                             ) : (
                                 '儲存'
                             )}
