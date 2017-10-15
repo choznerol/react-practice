@@ -1,0 +1,17 @@
+.fix100 {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+.gradient-background {
+
+    .gradient-background__one {
+        @extend .fix100;
+        background: red; /* For browsers that do not support gradients */
+        background: -webkit-linear-gradient(red, yellow, green); /* For Safari 5.1 to 6.0 */
+        background: -o-linear-gradient(red, yellow, green); /* For Opera 11.1 to 12.0 */
+        background: -moz-linear-gradient(red, yellow, green); /* For Firefox 3.6 to 15 */
+        background: linear-gradient(red, yellow, green); /* Standard syntax */
+    }
+}

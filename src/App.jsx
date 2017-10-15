@@ -6,6 +6,7 @@ import 'rxjs';
 import HeroPage from './components/HeroPage';
 import Message from './containers/Message';
 import LoadingBar from 'react-redux-loading-bar'
+import GradientBackground from './components/GradientBackground'
 import './styles/index.scss'
 
 const store = configureStore();
@@ -34,6 +35,8 @@ class App extends Component {
                                 )}></Route>
                             </Switch>
                         </main>
+
+                        <GradientBackground />
 
                     </div>
                 </BrowserRouter>
