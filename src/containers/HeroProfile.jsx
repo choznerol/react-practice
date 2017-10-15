@@ -10,10 +10,32 @@ import LoadingCard from '../components/LoadingCard'
 import AbilityCounter from '../components/AbilityCounter'
 import PulseLoader from '../components/PulseLoader'
 
+const profileShape = PropTypes.shape({
+    // fetched version
+    str: PropTypes.number.isRequired,
+    int: PropTypes.number.isRequired,
+    agi: PropTypes.number.isRequired,
+    luk: PropTypes.number.isRequired,
+    // User edited copy
+    unsaved_str: PropTypes.number,
+    unsaved_int: PropTypes.number,
+    unsaved_agi: PropTypes.number,
+    unsaved_luk: PropTypes.number
+})
+
 class HeroProfile extends Component {
     static propTypes = {
-        heroID: PropTypes.string.isRequired,
+        // Required props
         showLoading: PropTypes.bool.isRequired,
+        heroID: PropTypes.string.isRequired,
+
+        // showLoading === true 時才需要
+        profile: profileShape,
+        totalPoints: PropTypes.number,
+        isSubmitting: PropTypes.bool,
+        remainPoints: PropTypes.number,
+
+        // handlers
         handleIncrementClick: PropTypes.func.isRequired,
         handleDecrementClick: PropTypes.func.isRequired,
         handleHeroChanged: PropTypes.func.isRequired,
