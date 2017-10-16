@@ -18,7 +18,7 @@ class App extends Component {
                     <div>
 
                         {/* 頂部進度條 */}
-                        <LoadingBar/>
+                        <LoadingBar className="loading-bar"/>
 
                         {/* 更新成功、失敗提示訊息 */}
                         <Message/>

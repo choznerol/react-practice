@@ -6,8 +6,8 @@ const HeroCard = ({ id, name, image, isSelected }) => {
 
     return (
     <NavLink
-        className="card"
-        activeClassName="border-success"
+        className="card text-white bg-dark border-secondary"
+        activeClassName="card-active"
         isActive={ () => isSelected }
         to={'/heros/' + id}
         >

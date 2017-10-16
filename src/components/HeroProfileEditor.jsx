@@ -7,7 +7,7 @@ const HeroProfileEditor = (props) => {
     const allowSubmit = props.remainPoints === 0
 
     return (
-        <div className="card">
+        <div className="card bg-dark text-white border-white">
             <div className="card-body">
                 <div className="row">
 
