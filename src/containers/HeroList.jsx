@@ -16,7 +16,7 @@ class HeroList extends Component {
                 // selected: PropTypes.bool.isRequired
             }).isRequired).isRequired,
         }),
-        selectedHeroId: PropTypes.string
+        selectedHeroID: PropTypes.string
     }
 
     // 造訪 /heros 並渲染此組件後抓一次所有的 heros
@@ -27,14 +27,14 @@ class HeroList extends Component {
     }
 
     render () {
-        const { heros, selectedHeroId } = this.props
+        const { heros, selectedHeroID } = this.props
         return (
             <div className="card-deck mb-4">
                 { heros.items.map(hero =>
                     <HeroCard
                         key={ hero.id }
                         {...hero}
-                        selectedHeroId={ selectedHeroId }
+                        isSelected={ hero.id === selectedHeroID }
                     />
                 )}
             </div>
@@ -44,7 +44,7 @@ class HeroList extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
     heros: state.heros,
-    selectedHeroId: ownProps.selectedHeroId
+    selectedHeroID: ownProps.selectedHeroID
 })
 
 export default connect(mapStateToProps)(HeroList)

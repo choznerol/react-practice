@@ -37,7 +37,7 @@ class HeroProfile extends Component {
 
 const mapStateToProps = (state, ownProps) => {
 
-    const heroID = ownProps.match.params.id
+    const heroID = ownProps.selectedHeroID
     const profile = state.profiles.items[heroID]
     const showLoading = !profile || state.profiles.isFetching
 
