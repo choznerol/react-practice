@@ -34,7 +34,7 @@ class HeroList extends Component {
                     <HeroCard
                         key={ hero.id }
                         {...hero}
-                        selectedHeroId={ selectedHeroId }
+                        isSelected={ hero.id === selectedHeroID }
                     />
                 )}
             </div>
