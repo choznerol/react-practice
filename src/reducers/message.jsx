@@ -8,7 +8,7 @@ const message = (state = INITIAL_STORE_STATE.message, action) => {
             return {
                 visible: true,
                 text: action.message_text,
-                bs_style: 'success'
+                bs_style: 'primary'
             }
 
         // 操作失敗

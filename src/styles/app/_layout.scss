@@ -2,6 +2,10 @@
 // Non-reusable global layout CSS
 //
 
+body {
+    @extend .bg-dark;
+}
+
 main {
 
     // 置中
