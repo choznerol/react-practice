@@ -26,11 +26,11 @@ class App extends Component {
                         {/*  */}
                         <main className="p-2">
                             <Switch>
-                                <Route path="/heros" component={HeroPage}></Route>
+                                <Route path="/heros/:id?" component={HeroPage}></Route>
 
                                 {/* Default redirect to /heros */}
                                 <Route render={() => (
-                                    <Redirect to='/heros'/>
+                                    <Redirect to='/heros/'/>
                                 )}></Route>
                             </Switch>
                         </main>
