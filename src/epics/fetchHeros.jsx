@@ -26,12 +26,12 @@ const fetchHerosEpic = action$ =>
                 )
             } else {
                 return Observable.concat(
-                    Observable.of(fetchHerosrejected(data.code)),
+                    Observable.of(fetchHerosRejected(data.code)),
                     Observable.of(hideLoading())
                 )
             }
         })
-        .catch(error => Observable.of(fetchHerosrejected(error.message), hideLoading()))
+        .catch(error => Observable.of(fetchHerosRejected(error.message), hideLoading()))
     );
 
 
