@@ -2,16 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 
-const HeroCard = ({ id, name, image, selectedHeroId }) => {
-
-    // react-router 據此判斷是否套用 active class
-    const isActive = () => parseInt(id) === parseInt(selectedHeroId)
+const HeroCard = ({ id, name, image, isSelected }) => {
 
     return (
     <NavLink
-        className="card"
-        activeClassName="border-success"
-        isActive={isActive}
+        className="card text-white bg-dark border-secondary"
+        activeClassName="card-active"
+        isActive={ () => isSelected }
         to={'/heros/' + id}
         >
         <img className="card-img-top" src={ image } alt={ `${id}-${name}` }/>
@@ -25,7 +22,7 @@ HeroCard.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
-    selectedHeroId: PropTypes.string
+    isSelected: PropTypes.bool.isRequired
 }
 
 export default HeroCard

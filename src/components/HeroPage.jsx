@@ -1,23 +1,23 @@
-import React from 'react';
-import { Route } from 'react-router-dom';
-import { addTodo } from '../actions'
+import React from 'react'
+import { Route } from 'react-router-dom'
 import HeroList from '../containers/HeroList'
 import HeroProfile from '../containers/HeroProfile'
 
-const HeroPage = ({ match }) => (
-    <div style={{
-        maxWidth: '1024px',
-        marginLeft: 'auto',
-        marginRight: 'auto'
-    }}>
-        <Route path="/:id">
-            <HeroList selectedHeroId={ match.params.id } ></HeroList>
-        </Route>
+const HeroPage = ({ match }) => {
+    const selectedHeroID = match.params.id
 
-        {/* url 末尾有 hero id 才渲染調整能力值的組件 */}
-        {match.params.id ? (<HeroProfile selectedHeroId={ match.params.id } ></HeroProfile>) : null}
+    return (
+        <div>
 
-    </div>
-)
+            {/* hero 卡片列表 */}
+            <HeroList selectedHeroID={ selectedHeroID } />
+
+            {/* 能力值調整面板 */}
+            { selectedHeroID ? (<HeroProfile selectedHeroID={ selectedHeroID } />) : null }
+
+        </div>
+    )
+
+}
 
 export default HeroPage

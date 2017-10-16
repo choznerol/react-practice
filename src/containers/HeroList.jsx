@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { selecteHero, fetchHeros, fetchProfileIfNeeded } from '../actions'
+import { showLoading } from 'react-redux-loading-bar'
 import HeroCard from '../components/HeroCard'
 
 class HeroList extends Component {
@@ -15,25 +16,25 @@ class HeroList extends Component {
                 // selected: PropTypes.bool.isRequired
             }).isRequired).isRequired,
         }),
-        selectedHeroId: PropTypes.string
+        selectedHeroID: PropTypes.string
     }
 
     // 造訪 /heros 並渲染此組件後抓一次所有的 heros
     componentDidMount() {
         const { dispatch } = this.props
         dispatch(fetchHeros())
+        dispatch(showLoading())
     }
 
     render () {
-        const { heros, handleCardClick, selectedHeroId } = this.props
+        const { heros, selectedHeroID } = this.props
         return (
             <div className="card-deck mb-4">
                 { heros.items.map(hero =>
                     <HeroCard
                         key={ hero.id }
                         {...hero}
-                        // onClick={ () => handleCardClick(hero.id) }
-                        selectedHeroId={ selectedHeroId }
+                        isSelected={ hero.id === selectedHeroID }
                     />
                 )}
             </div>
@@ -43,7 +44,7 @@ class HeroList extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
     heros: state.heros,
-    selectedHeroId: ownProps.selectedHeroId
+    selectedHeroID: ownProps.selectedHeroID
 })
 
 export default connect(mapStateToProps)(HeroList)

@@ -25,7 +25,6 @@ AbilityCounter.propTypes = {
     abilityType: PropTypes.string.isRequired,
     remainPoints: PropTypes.number.isRequired,
     unsavedAbility: PropTypes.number.isRequired,
-    onDecrementClick: PropTypes.func.isRequired,
     onDecrementClick: PropTypes.func.isRequired
 }
 

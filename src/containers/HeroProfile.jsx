@@ -1,113 +1,74 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { increaseUnsavedAbility, decreaseUnsavedAbility,
-        fetchProfileIfNeeded, patchProfile, clearMessage } from '../actions'
-import PropTypes from 'prop-types'
-import FetchingProfile from '../components/FetchingProfile'
-import AbilityCounter from '../components/AbilityCounter'
-import Message from '../components/Message'
+import { increaseUnsavedAbility,
+         decreaseUnsavedAbility,
+         fetchProfileIfNeeded,
+         patchProfile,
+         clearMessage } from '../actions'
+import LoadingCard from '../components/LoadingCard'
+import HeroProfileEditor from '../components/HeroProfileEditor'
 
 class HeroProfile extends Component {
-    static propTypes = {
-        heroID: PropTypes.string.isRequired,
-        isFetching: PropTypes.bool.isRequired,
-        handleIncrementClick: PropTypes.func.isRequired,
-        handleDecrementClick: PropTypes.func.isRequired,
-        handleHeroChanged: PropTypes.func.isRequired,
-        handleSave: PropTypes.func.isRequired
-    }
 
+    // 初次選擇 hero 時 fetch 它的 profile
     componentDidMount() {
-        this.props.handleHeroChanged(this.props.heroID)
+        this.props.dispatch(fetchProfileIfNeeded(this.props.heroID))
     }
 
+    // 切換 hero 時 fetch 新的 profile，清除任何提示訊息（如：「儲存成功」）
     componentWillUpdate(nextProps, nextState) {
         if (this.props.heroID !== nextProps.heroID) {
-            this.props.handleHeroChanged(nextProps.heroID)
+            this.props.dispatch(fetchProfileIfNeeded(nextProps.heroID))
+            this.props.dispatch(clearMessage())
         }
     }
 
     render () {
-        const { heroID, message, profiles, isFetching, handleIncrementClick, handleDecrementClick, handleSave } = this.props
 
-        // Fetching
-        if (isFetching) {
-            return (<FetchingProfile/>)
+        if (this.props.showLoading) {
+            return (<LoadingCard/>)
         } else {
-            const abilities = profiles.items[heroID]
-            const remainPoints = this.calRemainPoints(abilities)
-
             return (
-                <div className="card">
-                    { message ? (<Message content={ message }/>) : null}
-                    <div className="card-body">
-                        <div className="row">
-                            {/* 右半邊：可調整 4 種能力值 */}
-                            <div className="col">
-                                { ['str', 'int', 'agi', 'luk'].map(key => {
-                                        return (
-                                            <AbilityCounter
-                                                key={ heroID + key }
-                                                abilityType={ key }
-                                                remainPoints={ remainPoints }
-                                                unsavedAbility={ abilities[`unsaved_${ key }`] }
-                                                onIncrementClick={ () => handleIncrementClick(heroID, key)}
-                                                onDecrementClick={ () => handleDecrementClick(heroID, key)}
-                                            />
-                                        )
-                                    })}
-                            </div>
-                            {/* 左半邊：顯示剩餘點數及儲存 */}
-                            <div className="col d-flex flex-column justify-content-end align-items-end">
-                                <b>剩餘點數：{ remainPoints }</b>
-                                <button
-                                    className="btn btn-primary"
-                                    onClick={() => { handleSave(heroID, {
-                                            str: abilities.unsaved_str,
-                                            int: abilities.unsaved_int,
-                                            agi: abilities.unsaved_agi,
-                                            luk: abilities.unsaved_luk
-                                        })
-                                    }}
-                                >
-                                    儲存
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <HeroProfileEditor {...this.props} />
             )
         }
-    }
-
-    calRemainPoints(abilities) {
-        const allPoints = ['str', 'int', 'agi', 'luk'].reduce((prev, key) => prev + abilities[key], 0)
-        const usedPoints = ['unsaved_str', 'unsaved_int', 'unsaved_agi', 'unsaved_luk'].reduce((prev, key) => prev + abilities[key], 0)
-        return allPoints - usedPoints
     }
 }
 
 const mapStateToProps = (state, ownProps) => {
-    const heroID = ownProps.selectedHeroId
-    const isFetching = !state.profiles.items[heroID]
-    return {
-        heroID,
-        isFetching,
-        profiles: state.profiles,
-        message: state.message
+
+    const heroID = ownProps.selectedHeroID
+    const profile = state.profiles.items[heroID]
+    const showLoading = !profile || state.profiles.isFetching
+
+    if (showLoading) {
+        return {
+            heroID,
+            showLoading
+        }
+    } else {
+
+        const totalPoints = ['str', 'int', 'agi', 'luk'].reduce((prev, key) => prev + profile[key], 0)
+        const totalUnsavedPoints = ['unsaved_str', 'unsaved_int', 'unsaved_agi', 'unsaved_luk'].reduce((prev, key) => prev + profile[key], 0)
+
+        return {
+            showLoading,
+            heroID,
+            profile,
+            totalPoints,
+            isSubmitting: state.profiles.isSubmitting,
+            remainPoints: totalPoints - totalUnsavedPoints
+        }
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
+    dispatch,
     handleIncrementClick: (id, ability) => {
         dispatch(increaseUnsavedAbility(id, ability))
     },
     handleDecrementClick: (id, ability) => {
         dispatch(decreaseUnsavedAbility(id, ability))
-    },
-    handleHeroChanged: (newHeroID) => {
-        dispatch(fetchProfileIfNeeded(newHeroID))
-        dispatch(clearMessage())
     },
     handleSave: (heroID, data) => {
         dispatch(patchProfile(heroID, data))

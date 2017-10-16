@@ -1,0 +1,17 @@
+//
+// Non-reusable global layout CSS
+//
+
+body {
+    @extend .bg-dark;
+}
+
+main {
+
+    // 置中
+    max-width: 1024px;
+    margin-right: auto;
+    margin-left: auto;
+
+    @extend .mt-lg-5;
+}
