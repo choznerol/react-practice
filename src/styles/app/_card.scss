@@ -1,3 +1,16 @@
+.card {
+
+    // Disable <a> tag underline
+    &:hover {
+        text-decoration: none;
+    }
+}
+
 .card-active {
+
+    // Border
     @extend .border-white;
+
+    // Background color
+    @extend a.bg-dark:hover;
 }

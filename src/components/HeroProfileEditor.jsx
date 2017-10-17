@@ -6,7 +6,7 @@ import PulseLoader from '../components/PulseLoader'
 const HeroProfileEditor = (props) => {
 
     return (
-        <div className="card bg-dark text-white border-white">
+        <div className="card card-active bg-dark text-white border-white">
             <div className="card-body">
                 <div className="row">
 
