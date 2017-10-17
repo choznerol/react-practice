@@ -6,7 +6,7 @@ import PulseLoader from '../components/PulseLoader'
 const HeroProfileEditor = (props) => {
 
     return (
-        <div className="card bg-dark text-white border-white">
+        <div className="card card-active bg-dark text-white border-white">
             <div className="card-body">
                 <div className="row">
 
@@ -18,6 +18,7 @@ const HeroProfileEditor = (props) => {
                                     key={ props.heroID + key }
                                     abilityType={ key }
                                     remainPoints={ props.remainPoints }
+                                    isUnsaved={ props.profile[`unsaved_${ key }`] !== props.profile[key] }
                                     unsavedAbility={ props.profile[`unsaved_${ key }`] }
                                     onIncrementClick={ () => props.handleIncrementClick(props.heroID, key)}
                                     onDecrementClick={ () => props.handleDecrementClick(props.heroID, key)}
