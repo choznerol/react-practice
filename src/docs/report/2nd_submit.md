@@ -14,7 +14,7 @@
 順便重寫了一個直接依賴於 store 的 Message 元件。-> 已修正（詳見其他更新3.）
 
 
-4. 表單沒有做 validation 使用者可以直接按下儲存，然後 backend 才回傳錯誤，這個部分可以在前端先做掉。-> **已修正（[5010a1](https://github.com/choznerol/react-practice/commit/5010a1614512567eb55ea1124eef7a0474bff5a5)）**
+4. 表單沒有做 validation 使用者可以直接按下儲存，然後 backend 才回傳錯誤，這個部分可以在前端先做掉。-> **已修正（[5010a1](https://github.com/choznerol/react-practice/commit/5010a1614512567eb55ea1124eef7a0474bff5a5)）（10/17更新：原本的驗證為「剩餘點數非0無法點擊儲存按鈕」，增加檢查「沒有未儲存的更新」，並改成跳警告訊息 ([2e73d9](https://github.com/choznerol/react-practice/commit/2e73d928f8094346af1d848bf2ddfd08a5bcfaf7))）**
 
 
 5. AbilityCounter.jsx props 有兩個 onDecrementClick。 -> **已修正（ [b15c20](https://github.com/choznerol/react-practice/commit/b15c2017ea5712bcf5427b74c5c996d9eaf6c348)）**
