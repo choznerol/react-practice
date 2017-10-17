@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
+import isEqual from 'lodash/isEqual'
+import sum from 'lodash/sum'
 import { connect } from 'react-redux'
 import { increaseUnsavedAbility,
          decreaseUnsavedAbility,
          fetchProfileIfNeeded,
          patchProfile,
+         updateMessage,
          clearMessage } from '../actions'
 import LoadingCard from '../components/LoadingCard'
 import HeroProfileEditor from '../components/HeroProfileEditor'
@@ -39,6 +42,8 @@ const mapStateToProps = (state, ownProps) => {
 
     const heroID = ownProps.selectedHeroID
     const profile = state.profiles.items[heroID]
+
+    // 尚未 fetch（尚無資料）或正在 fetch 都顯示 loading
     const showLoading = !profile || state.profiles.isFetching
 
     if (showLoading) {
@@ -70,8 +75,28 @@ const mapDispatchToProps = (dispatch) => ({
     handleDecrementClick: (id, ability) => {
         dispatch(decreaseUnsavedAbility(id, ability))
     },
-    handleSave: (heroID, data) => {
-        dispatch(patchProfile(heroID, data))
+    handleSave: (heroID, profile) => {
+        const saved = [profile.str, profile.int, profile.agi, profile.luk]
+        const unsaved = [profile.unsaved_str, profile.unsaved_int, profile.unsaved_agi, profile.unsaved_luk ]
+
+        // 表癲驗證：無剩餘點數
+        if (sum(saved) !== sum(unsaved)) {
+            dispatch(updateMessage('剩餘點數必須為 0', 'warning'))
+
+        // 表單驗證：無更新
+        } else if (isEqual(saved, unsaved)) {
+            dispatch(updateMessage('沒有未儲存的更新', 'warning'))
+
+        } else {
+            const updates = {
+                str: profile.unsaved_str,
+                int: profile.unsaved_int,
+                agi: profile.unsaved_agi,
+                luk: profile.unsaved_luk
+            }
+            dispatch(patchProfile(heroID, updates))
+        }
+
     }
 })
 
