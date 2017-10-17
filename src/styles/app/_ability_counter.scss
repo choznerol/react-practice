@@ -1,0 +1,20 @@
+//
+// Styles for `src/components/AbilityCounter`
+//
+
+.ability-counter {
+
+    .ability-type {
+        width: 4rem;
+    }
+
+    .ability-value {
+        @extend .text-center;
+        width: 2rem;
+    }
+
+    .unsaved-ability-value {
+        @extend .ability-value;
+        color: theme-color('secondary');
+    }
+}
