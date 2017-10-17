@@ -5,6 +5,8 @@ export const decreaseUnsavedAbility = makeActionCreator('DECREASE_UNSAVED_ABILIT
 
 export const patchProfile = makeActionCreator('PATCH_PROFILE', 'id', 'data')
 
+export const updateMessage = makeActionCreator('UPDATE_MESSAGE', 'text', 'bs_style')
+
 export const clearMessage = makeActionCreator('CLEAR_MESSAGE')
 
 
