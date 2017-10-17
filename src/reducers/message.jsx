@@ -8,7 +8,7 @@ const message = (state = INITIAL_STORE_STATE.message, action) => {
             return {
                 visible: true,
                 text: action.message_text,
-                bs_style: 'primary'
+                bs_style: 'success'
             }
 
         // 操作失敗
@@ -19,6 +19,14 @@ const message = (state = INITIAL_STORE_STATE.message, action) => {
                 visible: true,
                 text: composeMessageText(action.message_text, action.err),
                 bs_style: 'danger'
+            }
+
+        // 手動更新訊息
+        case 'UPDATE_MESSAGE':
+            return {
+                visible: true,
+                text: action.text,
+                bs_style: action.bs_style
             }
 
         // 關閉提示訊息（切換卡片、手動關閉）
