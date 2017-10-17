@@ -1,5 +1,10 @@
+//
+// Styles for `react-redux-loading-bar`
+// Used in `/App.jsx`
+//
+
 .loading-bar {
-    background-color: theme-color("success"); 
+    background-color: theme-color("success");
     height: 4px;
     position: absolute;
 }
