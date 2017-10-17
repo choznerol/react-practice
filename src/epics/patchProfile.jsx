@@ -2,6 +2,7 @@ import { Observable } from 'rxjs'
 import { ajax } from 'rxjs/observable/dom/ajax'
 import { patchProfileFulfilled,
          patchProfileRejected,
+         fetchProfileFulfilled,
          hideSubmitLoading } from '../actions'
 
 
@@ -15,17 +16,21 @@ const patchProfileEpic = (action$, store) =>
         ajax({
             url: `https://hahow-recruit.herokuapp.com/heroes/${action.id}/profile`,
             method: 'PATCH',
-            body: action.data,
+            body: action.updates,
             crossDomain: true,
             headers: {
                 'Content-Type': 'application/json'
             }
         })
-        .map((data) => {
-            if (data.status === 200) {
-                return patchProfileFulfilled(data, action.id)
+        .mergeMap((res) => {
+            if (res.status === 200) {
+                return Observable.concat(
+                    Observable.of(patchProfileFulfilled(res, action.id, action.updates)),
+                    /** 同步為更新後的能力值 */
+                    Observable.of(fetchProfileFulfilled(action.id, action.updates))
+                )
             } else {
-                return patchProfileRejected(data.code)
+                return Observable.of(patchProfileRejected(res.code))
             }
         })
         .catch(error => Observable.of(patchProfileRejected(error)))

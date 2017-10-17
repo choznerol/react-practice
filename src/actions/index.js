@@ -3,7 +3,7 @@ export const increaseUnsavedAbility = makeActionCreator('INCREASE_UNSAVED_ABILIT
 
 export const decreaseUnsavedAbility = makeActionCreator('DECREASE_UNSAVED_ABILITY', 'id', 'ability')
 
-export const patchProfile = makeActionCreator('PATCH_PROFILE', 'id', 'data')
+export const patchProfile = makeActionCreator('PATCH_PROFILE', 'id', 'updates')
 
 export const updateMessage = makeActionCreator('UPDATE_MESSAGE', 'text', 'bs_style')
 
@@ -40,10 +40,11 @@ export const fetchProfileRejected = (err) => ({
 
 
 /** Patch Hero's Profile */
-export const patchProfileFulfilled = (data, id) => ({
+export const patchProfileFulfilled = (res, id, updates) => ({
     type: 'PATCH_PROFILE_FULFILLED',
     id,
-    data,
+    res,
+    updates,
     message_text: '更新成功！',
     receivedAt: Date.now()
 })
